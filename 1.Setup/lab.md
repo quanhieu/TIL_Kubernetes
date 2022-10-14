@@ -1,9 +1,9 @@
-- Tạo namespace mới với tên của bạn, triển khai tất cả các pod ở yêu cầu
-sau trên namespace này.
+```
+- Create namespace with your any-name, and implement namespace for all pods.
 
-- Đánh label cho namespace này với giá trị namespace-test là true.
+- Update label for namespace, that namespace-test is true.
 
-- Tạo các pod với image đã build trong học phần Docker
+- Create pods with image is built by any docker
 
-- Từ các pod đã tạo thử gọi đến dịch vụ của nhau, ví dụ từ ubuntu gọi
-đến nginx webserver.
+- All pods is created, try to conversation, example from ubuntu to nginx webserver.
+```

@@ -47,6 +47,8 @@ minikube config set driver docker
 
 # Demo
 
+[pod.yml](./pod.yml)
+
 ```yml
 cat ~/.kube/config
 

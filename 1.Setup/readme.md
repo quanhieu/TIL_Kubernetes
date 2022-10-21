@@ -79,10 +79,13 @@ kubectl delete pod nginx nginx-2
 # Alias
 
 ```
-# kubernetes
-alias k='kubectl'
-alias ku='kubectl'
 
+# kubecolor => sudo apt -y install kubecolor
+alias k="kubecolor"
+
+# kubernetes
+# alias k='kubectl'
+alias ku='kubectl'
 # minikube
 alias m='minikube'
 alias mi='minikube'

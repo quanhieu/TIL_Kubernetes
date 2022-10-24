@@ -1,0 +1,19 @@
+- hosts:
+    - local
+  become: true
+  roles:
+    - app.docker-install
+    - app.k8s-provision
+
+- hosts:
+    - local_master
+  become: true
+  roles:
+    - app.setting-kubectl
+    - app.rke-apply
+
+- hosts:
+    - local_rancher
+  become: true
+  roles:
+    - app.rancher-server

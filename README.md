@@ -7,6 +7,8 @@
 
 ## [Kubernetes Patterns](https://viblo.asia/s/kubernetes-patterns-aGK7jPPx5j2)
 
+## [Xuanthu lab Kubernetes](https://xuanthulab.net/kubernetes/)
+
 ## Tool
 
 ### [Kube color](https://github.com/hidetatz/kubecolor)
@@ -49,7 +51,16 @@ Tools for On-Premise Environments: Kubespray, Kubeadm, RKE (RKE1 | RKE2), K3S
 
 ### Setup k8s by Ansible + RKE
 
-[Ansible RKE playbook](https://github.com/kloia/rke-ansible)
+[DEPLOY A KUBERNETES CLUSTER USING ANSIBLE](https://buildvirtual.net/deploy-a-kubernetes-cluster-using-ansible/)
+  _ [github here](https://github.com/buildvirtual-git/kubernetes/tree/main/ansible-deploy-k8s)
+
+[Kubespray](https://github.com/kubernetes-sigs/kubesprayhttps://github.com/kloia/rke-ansible)
+
+[Ansible RKE playbook - vagrant](https://github.com/LukeMwila/local-kubernetes-setup-with-rke-and-vagrant)
+
+[Ansible role to deploy Kubernetes using Rancher Kubernetes Engine](https://github.com/cedadev/rke-ansible)
+
+[Ansible RKE playbook - aws](https://github.com/kloia/rke-ansible)
 
 [KubeInit](https://github.com/Kubeinit/kubeinit)
 

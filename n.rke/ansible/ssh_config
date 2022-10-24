@@ -1,0 +1,12 @@
+Host *
+  User vagrant
+  IdentityFile devops.pem
+
+Host master
+  HostName 192.168.30.2
+
+Host node1
+  HostName 192.168.30.3
+
+Host node2
+  HostName 192.168.30.4

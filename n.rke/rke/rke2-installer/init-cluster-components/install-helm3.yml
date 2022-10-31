@@ -1,0 +1,4 @@
+- hosts: rke2-cluster-masters
+  tasks:
+    - name: Install HELMv3
+      shell: 'curl -sLk raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash'

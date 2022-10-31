@@ -1,0 +1,35 @@
+- hosts: rke2-cluster-masters[0]
+  tasks:
+    - name: Include vars
+      include_vars:
+        dir: ../vars
+
+    - name: Copy cf-api-token-secret.yml template
+      template:
+       src: ../templates/cf-api-token-secret.yml
+       dest: ~/cf-api-token-secret.yml
+
+    - name: Create CF token secret
+      kubernetes.core.k8s:
+        state: present
+        src: ~/cf-api-token-secret.yml
+
+    - name: Remove cf-api-token-secret.yml
+      file:
+        state: absent
+        path: ~/cf-api-token-secret.yml
+##
+    - name: Copy cf-cluster-issuer.yml template
+      template:
+        src: ../templates/cf-cluster-issuer.yml
+        dest: ~/cf-cluster-issuer.yml
+
+    - name: Create ClusterIssuer
+      kubernetes.core.k8s:
+        state: present
+        src: ~/cf-cluster-issuer.yml
+
+    - name: Remove cf-cluster-issuer.yml
+      file:
+        state: absent
+        path: ~/cf-cluster-issuer.yml

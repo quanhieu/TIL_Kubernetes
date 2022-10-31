@@ -1,0 +1,27 @@
+- hosts: rke2-cluster-masters[0]
+  tasks:
+    - name: Include vars
+      include_vars:
+        dir: ../vars
+
+    - name: Remove Rancher Ingress
+      kubernetes.core.k8s:
+        state: absent
+        kind: Ingress
+        namespace: cattle-system
+        name: rancher
+
+    - name: Get create-rancher-ingress.yml
+      template:
+        src: ../templates/create-rancher-ingress.yml
+        dest: ~/create-rancher-ingress.yml
+
+    - name: Create Rancher Ingress
+      kubernetes.core.k8s:
+        state: present
+        src: ~/create-rancher-ingress.yml
+
+    - name: Remove create-rancher-ingress.yml
+      file:
+        state: absent
+        path: ~/create-rancher-ingress.yml

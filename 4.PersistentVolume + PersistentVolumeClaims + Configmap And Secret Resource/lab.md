@@ -1,7 +1,10 @@
 
 ```Install nfs server
+https://viblo.asia/p/k8s-phan-3-cai-dat-storage-cho-k8s-dung-nfs-RnB5pAw7KPG
 https://xuanthulab.net/su-dung-persistentvolume-nfs-tren-kubernetes.html
 https://vinasupport.com/huong-dan-cai-dat-nfs-server-tren-ubuntu-20-04/
+
+https://viblo.asia/p/k8s-phan-4-cai-dat-storage-cho-k8s-dung-longhorn-1Je5EAv45nL
 ```
 
 ```

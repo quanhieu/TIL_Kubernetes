@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rancher-tls-certificate
+  namespace: cattle-system
+  annotations:
+    cert-manager.io/acme-challenge-type: dns01
+    cert-manager.io/acme-dns01-provider: cloudflare
+    cert-manager.io/cluster-issuer: letsencrypt-production
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "600"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "600"
+spec:
+  rules:
+  - host: "{{ rancher_domain }}"
+    http:
+      paths:
+      - pathType: ImplementationSpecific
+        backend:
+          service:
+            name: rancher
+            port: 
+              number: 80 
+  tls:
+  - hosts:
+    - "{{ rancher_domain }}"
+    secretName: rancher-tls-certificate

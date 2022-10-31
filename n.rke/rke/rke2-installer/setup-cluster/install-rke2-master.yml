@@ -1,0 +1,73 @@
+- hosts: rke2-cluster-masters[0]
+  tasks:
+    - name: Include vars
+      include_vars:
+        dir: ../vars
+
+    - name: Install RKE2 to master node
+      shell: 'curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL="{{ rke2_version }}" sh -'
+    
+    - name: Start RKE2 Server
+      systemd:
+        state: started
+        enabled: yes
+        name: rke2-server.service
+      timeout: 600
+
+    - name: Wait for RKE2 Service
+      pause:
+        seconds: 5
+
+    - name: Create ~/.kube
+      file:
+        path: /root/.kube
+        state: directory
+        owner: root
+        group: root
+        mode: '0700'
+
+    - name: Create .kube/config
+      copy:
+        remote_src: True
+        dest: /root/.kube/config
+        src: /etc/rancher/rke2/rke2.yaml
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: Fetch kube_config to localhost
+      fetch:
+        src: /root/.kube/config
+        dest: /tmp/kube_config
+        flat: yes 
+
+    - name: Create config.yaml
+      shell: "echo server: https://{{ ansible_host }}:9345 > /var/lib/rancher/rke2/server/config.yaml; \
+             echo token: $(cat /var/lib/rancher/rke2/server/node-token) >> /var/lib/rancher/rke2/server/config.yaml"
+
+    - name: Fetch config.yaml
+      fetch:
+        src: "/var/lib/rancher/rke2/server/config.yaml"
+        dest: "/tmp/rke2_config.yaml"
+        flat: yes
+  
+    - name: Append alias k to .bashrc
+      lineinfile:
+        path: /root/.bashrc
+        line: alias k=/var/lib/rancher/rke2/bin/kubectl
+        create: yes
+
+    - name: Append kubectl compleition to .bashrc
+      lineinfile:
+        path: /root/.bashrc
+        line: 'source <(kubectl completion bash); complete -F __start_kubectl k'
+        create: yes
+
+    - name: Append /var/lib/rancher/rke2/bin/ to PATH env
+      lineinfile:
+        path: /etc/profile
+        line: export PATH=$PATH:/var/lib/rancher/rke2/bin
+        create: yes
+
+    - name: export PATH
+      shell: export PATH=$PATH:/var/lib/rancher/rke2/bin

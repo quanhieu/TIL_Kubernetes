@@ -1,0 +1,72 @@
+- hosts: rke2-cluster-masters[1:]
+  tasks:
+    - name: Include vars
+      include_vars:
+        dir: ../vars
+  
+    - name: Install RKE2 to master nodes
+      shell: 'curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL="{{ rke2_version }}" sh -'
+    
+    - name: Create ~/.kube
+      file:
+        path: /root/.kube
+        state: directory
+        owner: root
+        group: root
+        mode: '0700'
+
+    - name: Create ~/.kube/config
+      copy:
+        src: /tmp/kube_config
+        dest: /root/.kube/config
+        owner: root
+        group: root
+        mode: '0600'        
+
+    - name: Create /etc/rancher/rke2
+      file:
+        path: /etc/rancher/rke2/
+        state: directory
+        owner: root
+        group: root
+        mode: '0770'
+
+    - name: Copy rke2_config.yaml
+      copy:
+        src: /tmp/rke2_config.yaml
+        dest: /etc/rancher/rke2/config.yaml
+        owner: root
+        group: root
+        mode: '0660'
+
+    - name: Append alias k to .bashrc
+      lineinfile:
+        path: /root/.bashrc
+        line: alias k=/var/lib/rancher/rke2/bin/kubectl
+        create: yes
+
+    - name: Append kubectl compleition to .bashrc
+      lineinfile:
+        path: /root/.bashrc
+        line: 'source <(kubectl completion bash); complete -F __start_kubectl k'
+        create: yes
+
+    - name: Append /var/lib/rancher/rke2/bin/ to PATH env
+      lineinfile:
+        path: /etc/profile
+        line: export PATH=$PATH:/var/lib/rancher/rke2/bin
+        create: yes
+    
+    - name: export PATH
+      shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
+
+    - name: Start RKE2 Server Service
+      systemd:
+        state: started
+        enabled: yes
+        name: rke2-server.service
+      timeout: 600
+
+    - name: Wait for RKE2 Service
+      pause:
+        seconds: 5

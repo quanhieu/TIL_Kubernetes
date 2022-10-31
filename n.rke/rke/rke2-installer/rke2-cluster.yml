@@ -1,0 +1,44 @@
+- hosts: rke2-cluster
+  
+- name: Prepare VMS
+  import_playbook: setup-cluster/prepare-vms.yml
+
+- name: Install Docker
+  import_playbook: setup-cluster/install-docker.yml
+
+- hosts: rke2-cluster-masters[0]
+
+- name: Install RKE2 Master
+  import_playbook: setup-cluster/install-rke2-master.yml
+
+- hosts: rke2-cluster-masters[1:]
+
+- name: Join Masters
+  import_playbook: setup-cluster/join-as-master.yml
+
+- hosts: rke2-cluster-workers
+
+- name: Join Workers
+  import_playbook: setup-cluster/join-as-worker.yml
+
+- hosts: rke2-cluster-masters
+
+- name: Install Helm-3
+  import_playbook: init-cluster-components/install-helm3.yml
+
+- hosts: rke2-cluster-masters[0]
+
+- name: Install Cert-Manager
+  import_playbook: init-cluster-components/helm-install-cert-manager.yml
+
+#- name: Install Rancher
+#  import_playbook: init-cluster-components/helm-install-rancher.yml
+#
+#- name: Create CF Issuer
+#  import_playbook: init-cluster-components/create-cf-issuer.yml
+#
+#- name: Get Certificates
+#  import_playbook: init-cluster-components/get-certificates.yml
+#
+#- name: Create Ingress
+#  import_playbook: init-cluster-components/create-ingress.yml

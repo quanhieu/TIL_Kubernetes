@@ -1,0 +1,16 @@
+rke2_version: v1.23.5+rke2r1
+
+cert_manager_version: v1.5.1
+
+# The name of the cluster to be added to the Rancher.
+cluster_name: rke2-test-cluster
+
+# Cloudflare Cluster Issuer
+CF_api_token: ''
+CF_email: ''
+CF_base_domain: 'testcluster.yourdomain.local'
+
+rancher_version: v2.6.4
+rancher_domain: "rancher.{{ CF_base_domain }}"
+rancher_replicas: '1'
+#rancher_password: '6vluyynACmXWOrcLpcC0XH34z231MD8sz'

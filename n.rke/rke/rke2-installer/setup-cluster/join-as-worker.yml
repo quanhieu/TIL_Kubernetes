@@ -1,0 +1,35 @@
+- hosts: rke2-cluster-workers
+  tasks:
+    - name: Include vars
+      include_vars:
+        dir: ../vars
+          
+    - name: Install RKE2 to worker nodes
+      shell: 'curl -sfL https://get.rke2.io | INSTALL_RKE2_CHANNEL="{{ rke2_version }}" INSTALL_RKE2_TYPE="agent" sh -'
+
+    - name: Create /etc/rancher/rke2
+      file:
+        path: /etc/rancher/rke2/
+        state: directory
+        owner: root
+        group: root
+        mode: '0770'
+
+    - name: Copy rke2_config.yaml
+      copy:
+        src: /tmp/rke2_config.yaml
+        dest: /etc/rancher/rke2/config.yaml
+        owner: root
+        group: root
+        mode: '0660'
+
+    - name: Start RKE2 Agent Service
+      systemd:
+        state: started
+        enabled: yes
+        name: rke2-agent.service
+      timeout: 600
+
+    - name: Wait for RKE2 Service
+      pause:
+        seconds: 5

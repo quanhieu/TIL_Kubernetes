@@ -9,6 +9,14 @@
 
 ## [Xuanthu lab Kubernetes](https://xuanthulab.net/kubernetes/)
 
+## Youtube
+
+- [Xuanthulab](https://www.youtube.com/playlist?list=PLwJr0JSP7i8D-QS50lYsXpAg-jYoqxMVy)
+
+- [FullstacKAGE](https://www.youtube.com/playlist?list=PL28xQzrHZLIWeRkVqP4NMpdySu279CoQj)
+
+<br />
+
 ## Tool
 
 ### [Kube color](https://github.com/hidetatz/kubecolor)
@@ -27,7 +35,22 @@ sudo apt update
 sudo apt install docker-color-output
 ```
 
-### [Faster way to switch between clusters and namespaces in kubectl](https://github.com/ahmetb/kubectx)
+### [NFS Storage](https://viblo.asia/p/k8s-phan-3-cai-dat-storage-cho-k8s-dung-nfs-RnB5pAw7KPG)
+
+### [Long horn](https://viblo.asia/p/k8s-phan-4-cai-dat-storage-cho-k8s-dung-longhorn-1Je5EAv45nL)
+
+### [Harbor Registry](https://viblo.asia/p/k8s-phan-11-xay-dung-private-docker-registry-phuc-vu-cicd-voi-kubernetes-Qbq5QRQRKD8)
+
+### [Rancher](https://viblo.asia/p/k8s-phan-2-cai-dat-kubernetes-cluster-va-rancher-m68Z0BL95kG)
+
+### [Self-hosted PaaS for Kubernetes - Otomi](https://otomi.io/)
+
+### [Argo CD](https://github.com/argoproj/argo-cd/)
+
+
+### [Switch between clusters and namespaces in kubectl by kubectx + kubens](https://github.com/ahmetb/kubectx)
+
+<br />
 
 ## Setup k8s clusters
 
@@ -63,6 +86,8 @@ Tools for On-Premise Environments: Kubespray, Kubeadm, RKE (RKE1 | RKE2), K3S
 [Ansible RKE playbook - aws](https://github.com/kloia/rke-ansible)
 
 [KubeInit](https://github.com/Kubeinit/kubeinit)
+
+<br />
 
 ## Aliases
 

@@ -1,0 +1,35 @@
+- hosts: rke2-cluster-masters[0]
+  tasks:
+    - name: Include vars
+      include_vars:
+        dir: ../vars
+  
+    - name: Copy get-wildcard-certificate.yml template
+      template:
+        src: ../templates/get-wildcard-certificate.yml
+        dest: ~/get-wildcard-certificate.yml
+
+    - name: Get wildcard certificate
+      kubernetes.core.k8s:
+        state: present
+        src: ~/get-wildcard-certificate.yml
+
+    - name: Remove get-wildcard-certificate.yml
+      file:
+        state: absent
+        path: ~/get-wildcard-certificate.yml
+##
+    - name: Copy get-rancher-certificate.yml template
+      template:
+        src: ../templates/get-rancher-certificate.yml
+        dest: ~/get-rancher-certificate.yml
+
+    - name: Get Rancher certificate
+      kubernetes.core.k8s:
+        state: present
+        src: ~/get-rancher-certificate.yml
+
+    - name: Remove get-rancher-certificate.yml
+      file:
+        state: absent
+        path: ~/get-rancher-certificate.yml

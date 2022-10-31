@@ -1,0 +1,42 @@
+- hosts: rke2-cluster-masters[0]
+#  vars:
+#    helm_repos:
+#      rancher_repo:
+#         repo_name: rancher-stable
+#         repo_url: 'https://releases.rancher.com/server-charts/stable'
+
+  tasks:
+    - name: Include vars
+      include_vars:
+        dir: ../vars
+  
+#    - name: Add Helm Repos
+#      kubernetes.core.helm_repository:
+#        name: "{{ item.value.repo_name }}"
+#        repo_url: "{{ item.value.repo_url }}"
+#      loop: "{{ lookup('dict', helm_repos) }}"
+
+    - name: Add Helm Repos
+      kubernetes.core.helm_repository:
+        name: rancher-stable
+        repo_url: 'https://releases.rancher.com/server-charts/stable'
+ 
+    - name: Install Rancher
+      kubernetes.core.helm:
+        name: rancher
+        release_namespace: cattle-system
+        chart_ref: rancher-stable/rancher
+
+        values:
+          hostname: "{{ rancher_domain }}"
+          replicas: "{{ rancher_replicas }}"
+#          bootstrapPassword: "{{ rancher_password }}"
+
+        create_namespace: True
+        force: False
+        replace: True
+        wait_timeout: 30s
+        disable_hook: True
+        #update_repo_cache: True
+        #wait: True
+

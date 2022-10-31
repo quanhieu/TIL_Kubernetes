@@ -1,0 +1,17 @@
+all:
+  children:
+    rke2-cluster-masters:
+      hosts:
+        172.16.128.4:
+    rke2-cluster-workers:
+      hosts:
+        172.16.128.5:
+        172.16.128.6:
+  vars:
+    ansible_user: 'root'
+    #ansible_password: 'debian11'
+
+rke2-cluster:
+  children:
+    rke2-cluster-masters:
+    rke2-cluster-workers:

@@ -1,0 +1,18 @@
+- hosts: rke2-cluster
+  tasks:
+    - name: Be aware of what you're doing. **THIS CLUSTER WILL BE PURGED**
+      pause:
+        seconds: 10
+  
+    - name: Purge RKE2
+      shell: '/usr/local/bin/rke2-uninstall.sh'
+      register: output
+      ignore_errors: true
+    
+    - name: Purge Kube Config
+      file:
+        state: absent
+        path: ~/.kube
+
+    - debug:
+        msg: "STDOUT {{ output.stdout }} \n\n STDERR {{ output.stderr }}"

@@ -1,0 +1,94 @@
+- hosts: rke2-cluster-masters[0]
+  tasks:
+    - name: Include vars
+      include_vars:
+        dir: ../vars
+
+    - name: Get Rancher Token
+      uri:
+        method: POST
+        url: "https://{{ rancher_domain }}/v3-public/localProviders/local?action=login"
+        return_content: yes
+        body_format: json
+        body: "{ 'username': 'admin', 'password': '{{ rancher_password }}'}"
+        status_code:
+        - 201
+        - 200
+        validate_certs: no
+      register: json_response
+
+    - name: Set Rancher Login Token
+      set_fact:
+        rancher_login_token: "{{ json_response.json.token }}"
+
+    - name: Create API Key
+      uri:
+        url: "https://{{ rancher_domain }}/v3/token"
+        return_content: yes
+        body:
+          description: initial_token
+        body_format: json
+        method: POST
+        status_code: 
+        - 201
+        - 200
+        validate_certs: no
+        headers:
+          Authorization: "Bearer {{ rancher_login_token }}"
+      register: json_response
+
+    - name: Set Rancher API Token
+      set_fact:
+        rancher_api_token: "{{ json_response.json.token }}"
+
+    - name: Create cluster
+      uri:
+        url: "https://{{ rancher_domain }}/v3/cluster"
+        return_content: yes
+        body: '{"dockerRootDir":"/var/lib/docker","enableNetworkPolicy":false,"type":"cluster","rancherKubernetesEngineConfig":{"addonJobTimeout":30,"ignoreDockerVersion":true,"sshAgentAuth":false,"type":"rancherKubernetesEngineConfig","authentication":{"type":"authnConfig","strategy":"x509"},"network":{"type":"networkConfig","plugin":"canal"},"ingress":{"type":"ingressConfig","provider":"nginx"},"monitoring":{"type":"monitoringConfig","provider":"metrics-server"},"services":{"type":"rkeConfigServices","kubeApi":{"podSecurityPolicy":false,"type":"kubeAPIService"},"etcd":{"snapshot":false,"type":"etcdService","extraArgs":{"heartbeat-interval":500,"election-timeout":5000}}}},"name":"{{ cluster_name }}"}'
+        body_format: json
+        method: POST
+        status_code:
+        - 201
+        - 200
+        validate_certs: no
+        headers:
+          Authorization: "Bearer {{ rancher_login_token }}"
+      register: json_response
+
+#    - debug:
+#        msg: "{{ json_response.json.id }}"
+
+    - name: Get cluster ID
+      set_fact:
+        cluster_id: "{{ json_response.json.id }}"
+
+    - name: Sleep for 5 sec
+      pause:
+        seconds: 5
+
+    - name: Get import YAML
+      uri:
+        url: https://{{ rancher_domain }}/v3/clusterregistrationtoken
+        return_content: yes
+        method: GET
+        status_code:
+        - 200
+        - 201
+        validate_certs: no
+        headers:
+          Authorization: "Bearer {{ rancher_login_token }}"
+      register: json_response
+
+#    - debug:
+#        msg: '{{ json_response.json.data[-1].command }}'
+
+    - name:
+      set_fact:
+        import_cluster_command: "{{ json_response.json.data[0].command }}"
+
+    - debug:
+        msg: "Rancher Password: {{ rancher_password }} \n Rancher Login Token: {{ rancher_login_token }} \n Rancher API Token: {{ rancher_api_token }}"
+
+    - debug:
+        msg: "Created Cluster ID: {{ cluster_id }} \n Cluster Import command: {{ import_cluster_command }}"

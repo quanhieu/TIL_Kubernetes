@@ -15,17 +15,38 @@
 
 - [FullstacKAGE](https://www.youtube.com/playlist?list=PL28xQzrHZLIWeRkVqP4NMpdySu279CoQj)
 
+  + [Google Kubernetes Engine là gì? Kiến thức cơ bản (GKE CI/CD Phần 1)](https://www.youtube.com/watch?v=TQf3mpngNXE)
+  + [Hands-on Google Kubernetes Engine, Infrastructure as Code, GitHub Actions (Part II)](https://www.youtube.com/watch?v=kaXEuToIFik)
+
+
 <br />
 
 ## Tool
 
 ### [Kube color](https://github.com/hidetatz/kubecolor)
 
-> sudo apt -y install kubecolor
+```
+sudo apt -y install kubecolor
+```
+
+Or
+
+```
+VERSION=latest      
+go install -ldflags="-X main.Version=${VERSION}" github.com/kubecolor/kubecolor/cmd/kubecolor@${VERSION}
+```
 
 ### [k9s](https://k9scli.io/)
 
-> sudo apt install k9s
+```
+sudo apt install k9s
+```
+
+Or
+
+```
+curl -sS https://webi.sh/k9s | sh
+```
 
 ### [Docker color](https://github.com/devemio/docker-color-output)
 
@@ -115,4 +136,39 @@ dps() {
 dcps() {
   docker compose ps "$@" | docker-color-output
 }
+```
+
+<br />
+
+## Install k8s
+
+```
+# 1. .Download the latest release
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+# 2. Download the kubectl checksum file
+curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+
+# 2.1. Validate the kubectl binary
+echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+
+#. 3. Install kubectl
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+# 4. Test to ensure the version you installed is up-to-date
+kubectl version --client --output=yaml  
+```
+
+## Instal minikube
+
+```
+# 1. Download and install minikube
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+
+# 2. Start minikube
+minikube start
+
+#. 3. Minikube dashboard
+minikube dashboard
 ```

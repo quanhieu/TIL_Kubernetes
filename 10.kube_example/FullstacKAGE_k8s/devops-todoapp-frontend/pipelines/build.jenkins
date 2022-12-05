@@ -1,0 +1,36 @@
+#!/usr/bin/env groovy
+
+def POD_LABEL   = "k8sagent-build-frontend"
+
+podTemplate(label: POD_LABEL, containers: [
+    containerTemplate(
+        name: 'kaniko',
+        image: 'gcr.io/kaniko-project/executor:debug',
+        envVars: [
+            containerEnvVar(key: 'GOOGLE_APPLICATION_CREDENTIALS', value: '/kaniko/credentials/kaniko-build-sa.json'),
+        ],
+        command: 'sleep',
+        args: '99d'
+    )
+], volumes: [
+    configMapVolume(configMapName: 'artifact-config', mountPath: '/kaniko/.docker'),
+    secretVolume(secretName: 'kaniko-gcp-credentials', mountPath: '/kaniko/credentials')
+]) {
+    node(POD_LABEL) {
+        stage('Clone Repository') {
+            checkout([
+                $class: 'GitSCM',
+                branches: [[name: "refs/tags/${SELECTED_TAG}"]],
+                extensions: [],
+                userRemoteConfigs: [[url: 'https://github.com/p-le/test-todoapp-frontend.git']]
+            ])
+        }
+        stage('Build Image') {
+            container('kaniko') {
+                ansiColor('xterm') {
+                    sh "/kaniko/executor --context=dir://./ --dockerfile=Dockerfile --destination=asia-northeast1-docker.pkg.dev/phu-le-it/devops-cicd-repository/todoapp-frontend:${SELECTED_TAG}"
+                }
+            }
+        }
+    }
+}

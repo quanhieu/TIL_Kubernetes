@@ -1,11 +1,21 @@
+# [Overview K8s](https://shipit.dev/posts/kubernetes-overview-diagrams.html)
 
-## [Kubernetes Series](https://viblo.asia/s/kubernetes-series-bq5QL8QGlD8)
+### Trịnh Quốc Việt
 
 ## [Chinh phục Kubernetes từ số 0](https://viblo.asia/s/chinh-phuc-kubernetes-tu-so-0-GJ59jLJaKX2)
 
 ## [K8S Basic - Kubernetes dành cho người mới bắt đầu](https://viblo.asia/s/k8s-basic-kubernetes-danh-cho-nguoi-moi-bat-dau-pgjLN088432)
 
+### Quân Huỳnh
+## [Kubernetes Series](https://viblo.asia/s/kubernetes-series-bq5QL8QGlD8)
+
 ## [Kubernetes Patterns](https://viblo.asia/s/kubernetes-patterns-aGK7jPPx5j2)
+
+## [Kubernetes Practice](https://viblo.asia/s/kubernetes-practice-rLZDX4DgZk0)
+
+## [Service Mesh on Kubernetes](https://viblo.asia/s/service-mesh-on-kubernetes-PwlVmRvE45Z)
+
+<br />
 
 ## [Xuanthu lab Kubernetes](https://xuanthulab.net/kubernetes/)
 

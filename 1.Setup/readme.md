@@ -50,29 +50,48 @@ minikube config set driver docker
 [pod.yml](./pod.yml)
 
 ```yml
+# Get kube config
 cat ~/.kube/config
 
+# Create pod
 kubectl run nginx --image nginx
 
+# Create pod by yaml
 kubectl apply -f ./pod.yml
 
+# get pods list
 kubectl get pods
 
+# Describe pod
 kubectl describe pod nginx-2
 
+# Label pod
 kubectl label pod nginx-2 env=production
 
+# Re-check
 kubectl describe pod nginx-2
 
+# Filter by label
 kubectl get pods -l env
 kubectl get pods -l env=production
+kubectl get pods -l env=production,run=nginx --show-labels
 
-kubectl get namespaces
-
+# Create namespace
 kubectl create namespace test-namespace
 
+# Get namespace
+kubectl get namespaces
+
+# Get pods by namespace
+k get pods -n default
+
+# Get all resource in a namespace
+k get all -n kube-system
+
+# Get pods at all namespace
 kubectl get pods -A
 
+# Delete pods
 kubectl delete pod nginx nginx-2
 ```
 

@@ -1,6 +1,6 @@
 # ReplicationControllers + ReplicaSets and Services + Ingress
 
-```
+```vi
 - Thực hiện deploy 2 webserver nginx và apache bằng ReplicaSet Resource
 
 - Thực hiện tạo Service NodePort cho Nginx và ClusterIP cho Apache

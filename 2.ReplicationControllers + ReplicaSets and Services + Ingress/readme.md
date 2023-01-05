@@ -1,4 +1,4 @@
-# ReplicationControllers + ReplicaSets and Services + Ingress
+# ReplicationControllers + ReplicaSets
 
 ## ReplicationControllers
 
@@ -35,9 +35,18 @@ k describe rs frontend
 k delete rs frontend
 ```
 
-## Service
+***
+# Networking in kubernetes
+
+***
+
+## Services
+
+### Default service - ClusterIP type
 
 ```
+$ cd networking
+
 # Apply
 k apply -f service.yml
 
@@ -59,7 +68,7 @@ k scale rc nginx --replicas=1
 
 # Get service
 k get svc
-## Take CLUSTER-IP as 10.98.234.32
+## Take <CLUSTER-IP> as 10.98.234.32
 
 
 # Init ubuntu
@@ -72,6 +81,7 @@ k exec --stdin --tty ubuntu -- sh
 apt update && apt install curl -y
 
 # Curl to service
+curl <CLUSTER-IP>:<port>
 curl 10.98.234.32:9999
 curl my-service:9999
 curl my-service.default.svc.cluster.local:9999
@@ -80,4 +90,78 @@ curl my-service.default.svc.cluster.local:9999
 # Check log pod nginx
 k get pods
 k logs nginx-q69zg
+
+# Port-forward
+k port-forward svc/my-service 7777:9999
+```
+
+### NodePort type
+
+```
+## Apply
+k apply -f service-node-pod.yml
+
+# Get node internal-ip
+k get nodes -o wide
+
+# Test
+<INTERNAL-IP>:<nodePort>
+192.168.49.2:30007
+```
+
+<br>
+
+# Ingress
+
+```
+# Minikube List addon
+minikube addons list
+minikube addons list | grep ingress
+
+# Minikube Enable ingress
+minikube addons enable ingress
+```
+
+```
+# Apply
+k apply -f ingress.yml
+
+# Get ingress
+k get ingress
+
+# Override
+sudo !!
+nano /etc/hosts
+
+## Add to /etc/hosts
+192.168.49.2    example.com.vn
+
+# Test
+example.com.vn
+```
+
+```
+# Get pod include namespace ingress-nginx
+k get po -n ingress-nginx
+
+# Exec inside ingress-nginx
+k exec -it ingress-nginx-controller-5959f988fd-kckt9 -n ingress-nginx -- sh
+
+cat /etc/nginx/nginx.conf
+```
+
+# Load Balancer
+
+`
+Just run on cloud with static IP included
+`
+
+```
+$ cd networking/load-balancer
+
+# Create pod
+k apply -f pod.yml
+
+# Create load balancer
+k apply -f service.yaml
 ```

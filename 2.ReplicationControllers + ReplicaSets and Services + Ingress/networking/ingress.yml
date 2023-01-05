@@ -7,13 +7,13 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: dantri.com.vn
-  - http:
+  - host: example.com.vn
+    http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: my-service
+            name: my-service-node-port
             port:
               number: 9999

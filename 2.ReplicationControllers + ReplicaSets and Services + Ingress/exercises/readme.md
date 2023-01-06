@@ -14,3 +14,29 @@
 
 ***
 
+### Apply [ReplicaSet](./replicaSet.yml)
+
+`
+k apply -f replicaSet.yml
+`
+
+### Apply [Service](./service.yml)
+
+`
+k apply -f service.yml
+`
+
+### Apply [Ingress](ingress.yml)
+
+`
+k apply -f ingress.yml
+`
+
+### Update <b>/etc/hosts</b>
+
+```
+sudo nano /etc/hosts
+
+192.168.49.2    dashboard.me
+192.168.49.2    apache2-webserver.com
+```

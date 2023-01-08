@@ -50,6 +50,9 @@ minikube config set driver docker
 [pod.yml](./pod.yml)
 
 ```yml
+# Check network
+netstat -tupln
+
 # Get kube config
 cat ~/.kube/config
 

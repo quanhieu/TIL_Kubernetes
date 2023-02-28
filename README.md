@@ -13,7 +13,7 @@
 
 ## [Kubernetes Practice](https://viblo.asia/s/kubernetes-practice-rLZDX4DgZk0)
 
-## [Service Mesh on Kubernetes](https://viblo.asia/s/service-mesh-on-kubernetes-PwlVmRvE45Z)
+## [Service Mesh on Kubernetes](https://devopsvn.tech/service-mesh-on-kubernetes)
 
 <br />
 

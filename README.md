@@ -68,6 +68,8 @@ sudo apt install docker-color-output
 
 ### [NFS Storage](https://viblo.asia/p/k8s-phan-3-cai-dat-storage-cho-k8s-dung-nfs-RnB5pAw7KPG)
 
+### [Ceph Storage](https://github.com/ceph/ceph)
+
 ### [Long horn](https://viblo.asia/p/k8s-phan-4-cai-dat-storage-cho-k8s-dung-longhorn-1Je5EAv45nL)
 
 ### [Harbor Registry](https://viblo.asia/p/k8s-phan-11-xay-dung-private-docker-registry-phuc-vu-cicd-voi-kubernetes-Qbq5QRQRKD8)
